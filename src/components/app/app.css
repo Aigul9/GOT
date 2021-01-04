@@ -1,0 +1,12 @@
+.toggle-btn {
+    margin-bottom: 10px !important;
+    padding: 5px;
+    background-color: #8e7d99;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.toggle-btn:focus {
+    outline: none;
+}
