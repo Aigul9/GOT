@@ -1,23 +1,10 @@
 import React, {Component} from 'react';
 import './itemList.css';
 import Spinner from '../spinner';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+// import gotService from '../../services/gotService';
 
-export default class ItemList extends Component {
-
-    state = {
-        itemList: null
-    };
-
-    componentDidMount() {
-        const {getData} = this.props;
-        getData()
-            .then((itemList) => {
-                this.setState({
-                    itemList,
-                });
-            })
-    }
+class ItemList extends Component {
 
     renderItems(arr) {
         return arr.map((item) => {
@@ -36,13 +23,8 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const {itemList} = this.state;
-
-        if (!itemList) {
-            return <Spinner/>
-        }
-
-        const items = this.renderItems(itemList);
+        const {data} = this.props;
+        const items = this.renderItems(data);
 
         return (
             <ul className="item-list list-group">
@@ -52,11 +34,52 @@ export default class ItemList extends Component {
     }
 }
 
-ItemList.defaultProps = {
-    onItemSelected: () => {}
+// data.defaultProps = {
+//     onItemSelected: () => {}
+// }
+
+// data.propTypes = {
+//     onItemSelected: PropTypes.func,
+//     // getData: PropTypes.arrayOf(PropTypes.object) // array of objects
+// }
+
+// const f = (a) => {
+//     console.log(a);
+//     return (b) => {
+//         console.log(a + b);
+//     }
+// }
+
+// f(1)(2);
+
+// functional wrapper
+const withData = (View) => {
+    // return data;
+    return class extends Component {
+        state = {
+            data: null
+        };
+    
+        componentDidMount() {
+            this.props.getData()
+                .then((data) => {
+                    this.setState({
+                        data,
+                    });
+                })
+        }
+
+        render() {
+            const {data} = this.state;
+
+            if (!data) {
+                return <Spinner/>
+            }
+            console.log("log", this.props);
+            return <View {...this.props} data={data}/>
+        }
+    }
 }
 
-ItemList.propTypes = {
-    onItemSelected: PropTypes.func,
-    // getData: PropTypes.arrayOf(PropTypes.object) // array of objects
-}
+// const {getAllCharacters} = new gotService();
+export default withData(ItemList); // HOC
