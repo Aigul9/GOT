@@ -1,0 +1,7 @@
+npm i http-server
+http-server build
+npx http-server build
+
+npm run build - папка build
+
+npm i react-router-dom --save
