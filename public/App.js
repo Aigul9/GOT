@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 function App() {
-    let [count, setCount] = useState(0); // initial value of count is 0
+    const [count, setCount] = useState(0); // initial value of count is 0
     // count is a variable, not an object as in state
     let [data, refreshData] = useState([{
         name: 'Aiugl',
